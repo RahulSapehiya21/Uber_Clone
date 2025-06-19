@@ -5,10 +5,11 @@ import UserLogin from './pages/UserLogin'
 import UserSignup from './pages/UserSignup'
 import CaptainLogin from './pages/CaptainLogin'
 import CaptainSignup from './pages/CaptainSignup'
+import "./App.css"
 
 const App = () => {
   return (
-    <div className='bg-red-500'>
+    <div className='bg-white'>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<UserLogin/>}/>
