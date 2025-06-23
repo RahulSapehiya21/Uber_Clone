@@ -1,30 +1,62 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { CaptainDataContext } from "../context/CaptainContext";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 
 const CaptainSignup = () => {
+
+const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [Firstname, setFirstname] = useState("");
   const [Lastname, setLastname] = useState("");
-  const [userData, setUserData] = useState({});
+  const [vehicleColor, setvehicleColor] = useState('');
+  const [vehiclePlate, setvehiclePlate] = useState('');
+  const [vehicleCapacity, setvehicleCapacity] = useState('');
+  const [vehicleType, setvehicleType] = useState('');
+  const { captain, setCaptain } = React.useContext(CaptainDataContext) 
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    setUserData({
-      fullName: {
-        Firstname: Firstname,
-        Lastname: Lastname,
+    const captainData = {
+      fullname: {
+        firstname: Firstname,
+        lastname: Lastname,
       },
       email: email,
       password: password,
-    });
+      vehicle: {
+        color: vehicleColor,
+        plate: vehiclePlate,
+        capacity: vehicleCapacity,
+        vehicleType: vehicleType
+      }
+    };
     
       // console.log(userData);
  
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
+
+    if (response.status === 201) {
+      const data = response.data
+      setCaptain(data.captain)
+      localStorage.setItem('token', data.token)
+      navigate('/captain-home')
+    }
+
     setEmail("");
     setFirstname("");
     setLastname("");
     setPassword("");
+    setvehicleColor("");
+    setvehiclePlate("");
+    setvehicleCapacity("");
+    setvehicleType("");
+
+    
   };
 
   return (
@@ -85,8 +117,51 @@ const CaptainSignup = () => {
               setPassword(e.target.value);
             }}
           />
+            <h3 className="text-lg font-medium mb-2">Vehicle Information</h3>
+            <div className="flex gap-4 mb-5">
+            <input
+              required
+              className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-lg"
+              type="text"
+              placeholder="Vehicle Color"
+              value={vehicleColor}
+              onChange={(e) => setvehicleColor(e.target.value)}
+            />
+            <input
+              required
+              className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-lg"
+              type="text"
+              placeholder="Vehicle Plate"
+              value={vehiclePlate}
+              onChange={(e) => setvehiclePlate(e.target.value)}
+            />
+            </div>
+            <div className="flex gap-4 mb-7">
+            <input
+              required
+              className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-lg"
+              type="number"
+              min="1"
+              placeholder="Vehicle Capacity"
+              value={vehicleCapacity}
+              onChange={(e) => setvehicleCapacity(e.target.value)}
+            />
+            <select
+              required
+              className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg"
+              value={vehicleType}
+              onChange={(e) => setvehicleType(e.target.value)}
+            >
+              <option value="" disabled>
+              Select Vehicle Type
+              </option>
+              <option value="car">Car</option>
+              <option value="auto">Auto</option>
+              <option value="motorcycle">Motorcycle</option>
+            </select>
+            </div>
           <button className="bg-[#111] text-white font-semibold  mb-3 rounded px-4 py-2 w-full text-base placeholder:text-xm">
-            Login
+            Create Captain account
           </button>
         </form>
         <p className="text-center">
