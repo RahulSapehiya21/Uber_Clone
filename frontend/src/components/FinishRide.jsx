@@ -1,29 +1,25 @@
-import React from "react";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-const WaitingForDriver = (props) => {
+const FinishRide = (props) => {
   return (
-    <div>
+     <div>
       <h5
         className="p-1 text-center w-[93%] absolute top-0"
         onClick={() => {
-          props.waitingForDriver(false);
+          props.setFinishRidePanel(false)
         }}
       >
         <i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i>
       </h5>
-      <div className="flex items-center justify-between">
-        <img
-          className="h-12"
-          src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1548646918/assets/e9/2eeb8f-3764-4e26-8b17-5905a75e7e85/original/2.png"
-          alt=""
-        />
-        <div className="text-right">
-          <h2 className="text-lg font-medium">Hrithik</h2>
-          <h4 className="text-xl font-semibold -mt-1 -mb-1">MP04 AB 1234</h4>
-          <p className="text-sm text-gray-600">Maruti Suzuki Alto</p>
-        </div>
-      </div>
-
+      <h3 className="text-2xl font-semibold mb-5">Finish this ride </h3>
+         <div className="flex items-center justify-between p-4 border-2 border-yellow-400 rounded-lg mt-4">
+            <div className="flex items-center gap-3">
+                 <img className="h-12 w-10 rounded-full object-cover w-12" src="https://pbs.twimg.com/media/BduTxWnIUAAKT_5.jpg" alt="" />
+                 <h2 className="text-lg font-medium">Kunal Agnihotri</h2>
+            </div>
+            <h5 className="text-lg font-semibold">2.2 KM</h5>
+         </div>
       <div className="flex gap-2 justify-between flex-col items-center">
         <div className="w-full mt-5">
           <div className="flex items-center gap-5 p-3 border-b-2">
@@ -40,7 +36,7 @@ const WaitingForDriver = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                sector-17, Cloth market
+                sukhna lake,Chandigarh
               </p>
             </div>
           </div>
@@ -52,9 +48,16 @@ const WaitingForDriver = (props) => {
             </div>
           </div>
         </div>
+        <div className='mt-6 w-full'>
+            <Link to='/captain-riding'
+          className="w-full mt-5 flex justify-center bg-green-600 text-white font-semibold p-2 rounded-lg"
+        > Finish ride!
+        </Link>
+       
+        </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default WaitingForDriver;
+export default FinishRide   
